@@ -58,7 +58,7 @@ async function read(path){
 
 async function toCSV(data){
     new Promise(function(resolve, reject){
-        fs.writeFile("testing.csv", data, (err) => {
+        fs.writeFile("Training.csv", data, (err) => {
             if(err)
                 throw(err);
         });
@@ -76,7 +76,7 @@ async function mCloud(options){
 }
 
 (async () => {
-    let linesTraining = split(await read("data/Training.csv"));
+    let linesTraining = split(await read("data/Training1.csv"));
     let rows = "";
     for (var i = 0; i < linesTraining.length; i++)
     {    
@@ -100,9 +100,6 @@ async function mCloud(options){
         }
         let row = await Object.assign(sentiments,await reviews);
         rows+= await writeCSV(await row);
-        if(i % 500 == 0){
-            await toCSV(rows);
-        }
     }
     await toCSV(rows);
 })();
