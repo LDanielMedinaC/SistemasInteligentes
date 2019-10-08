@@ -37,13 +37,13 @@ async function cleanData(fileSource, fileOutput){
 (async () => {
     // await cleanData("resultREPTree.csv", "resultREPTreeCleaned.csv");
     // await cleanData("resultRandomForest.csv", "resultRandomForestCleaned.csv");    
-    let lines = split(await read("ResultDesicionStumbStrafiedRemovedFolds.csv"));
+    let lines = split(await read("RandomForestDifferentSeed.csv"));
     let lineNumber = "";
     console.log("im here");
     lines.forEach(element => {
         console.log("========>" + element.split(":")[0]);
         lineNumber += element.split(":")[0] + "\n";
     });
-    await toCSV(lineNumber, "ResultDesicionStumbStrafiedRemovedFoldsCleaned.csv");
+    await toCSV(lineNumber, "RandomForestDifferentSeedCleaned.csv");
 
 })();
