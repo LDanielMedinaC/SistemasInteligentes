@@ -1,20 +1,16 @@
-# with open("Testing.csv", "r", 'latin-1') as f:
-#     lines = f.read()
-#     lines = lines.split("\n")
-#     for line in lines:
-#         line.encode("windows-1252").decode("latin-1")
-#         break
-# import sys 
-# import io
+import re
+from spellchecker import SpellChecker
 
-# f = "data/Testing.csv"
+spell = SpellChecker()
 
-# tf = open(f)
+def mispelledCounter(line):
+    x = re.findall("[a-zA-Z0-9]*[a-zA-Z][a-zA-Z0-9']*[]", line)
+    counter = 0
+    for word in x:
+        if(spell.correction(word) != word):
+            counter += 1 
+    print(counter)
 
-# input_stream = io.TextIOWrapper(tf, encoding='latin-1')
-# print(input_stream)
-# # for line in input_stream:
-# #     print(line)
 
 def splitData(data):
     lines = data.split('\n')
@@ -34,14 +30,16 @@ def countUppercase(line):
     return total
 
 with open('data/Training1.csv', 'r',encoding='latin-1') as f:
-    s1=f.read()
+    s1 = f.read()
+
+mispelledCounter("some of this words are grong")
 
 lines = splitData(s1)
 f= open("countPunctuation.csv","w+")
-for line in lines:
-    #print(line)
-    f.write("%d\n" % countUppercase(line[1]))
-    print(countUppercase(line[1]))
+# for line in lines:
+#     #print(line)
+#     f.write("%d\n" % countUppercase(line[0]))
+#     print(countUppercase(line[1]))
 f.close()
 
 
