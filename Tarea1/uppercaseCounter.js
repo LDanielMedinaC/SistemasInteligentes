@@ -25,7 +25,7 @@ async function writeCSV(data){
 
 async function read(path){
     return new Promise(function(resolve, reject){
-        fs.readFile(path, "utf8", function(err, data) {
+        fs.readFile(path, "latin1", function(err, data) {
             allData = data;    
             if(err){
                 reject(err)
@@ -38,27 +38,22 @@ async function read(path){
 
 async function countUppercases(text)
 {
-    let total = 0;
-    let uppercases = 0; 
-    for(var i = 0; i < text.length; i++)
-    {
-        console.log(text.charAt(i));
-        if(text.charAt(i) >= 'a' && text.charAt(i) <= 'z' || text.charAt(i) >= 'A' && text.charAt(i) <= 'Z')
-        {
-            total++;
-        }
-        if(text.charAt(i) >= 'A' && text.charAt(i) <= 'Z')
-        {
-            uppercases++;
-        }
+    //console.log(">>> COUNT");
+    
+    let regex = /[\']/g;
+    //console.log(text);   
+    let weird = text.match(regex);
+    if(weird == null){
+        return 0;
     }
-    console.log(total);
-    return uppercases/total;
+    return weird.length;
+
+
 }
 
 async function toCSV(data){
     new Promise(function(resolve, reject){
-        fs.writeFile("TestingUppercaseCounter.csv", data, (err) => {
+       + fs.writeFile("TrainingUppercaseCounter.csv", data, (err) => {
             if(err)
                 throw(err);
         });
@@ -66,15 +61,15 @@ async function toCSV(data){
 }
 
 (async () => {
-    let reviews = split(await read("./data/Testing.csv"));
-    let tupples = split(await read("testing1.csv"));
+    let reviews = split(await read("./data/Training1.csv"));
+    let tupples = split(await read("Training.csv"));
     let rows = "";  
     tupples[0].push("word_number");
 
-    for (var i = 1; i < tupples.length - 1; i++)
+    for (var i = 1; i < reviews.length; i++)
     {    
-        //console.log(reviews[i][0]);
-        tupples[i].push(await countUppercases(reviews[i][1]) + '');
+        //console.log("----> " + reviews[i][0]);
+        tupples[i].push(await countUppercases(reviews[i][0]) + '');
     }
     await toCSV(await writeCSV(tupples));
 })();
