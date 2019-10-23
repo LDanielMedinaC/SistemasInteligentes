@@ -4,12 +4,19 @@ from spellchecker import SpellChecker
 spell = SpellChecker()
 
 def mispelledCounter(line):
-    x = re.findall("[a-zA-Z0-9]*[a-zA-Z][a-zA-Z0-9']*[]", line)
+    x = re.split("[ \t\n,\.?\"]", line)
     counter = 0
+    #print("---->" + str(len(x)))
     for word in x:
+        if(len(word) == 0):
+            continue
+        if(not re.match(".*[a-zA-Z].*",word)):
+            continue
+        #print(word)
         if(spell.correction(word) != word):
             counter += 1 
-    print(counter)
+    #print(counter)
+    return counter
 
 
 def splitData(data):
@@ -32,14 +39,14 @@ def countUppercase(line):
 with open('data/Training1.csv', 'r',encoding='latin-1') as f:
     s1 = f.read()
 
-mispelledCounter("some of this words are grong")
-
 lines = splitData(s1)
-f= open("countPunctuation.csv","w+")
-# for line in lines:
-#     #print(line)
-#     f.write("%d\n" % countUppercase(line[0]))
-#     print(countUppercase(line[1]))
+#x = mispelledCounter("this iz m1 testing   tnx")
+f= open("countingMispelled.csv","w+")
+iterlines = iter(lines)
+next(iterlines)
+for line in iterlines:
+    f.write("%d\n" % mispelledCounter(line[0]))
+    #print(countUppercase(line[1]))
 f.close()
 
 

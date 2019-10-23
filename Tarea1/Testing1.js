@@ -43,18 +43,6 @@ async function writeCSV(data, id){
     return tags;
 }
 
-async function read(path){
-    return new Promise(function(resolve, reject){
-        fs.readFile(path, "utf8", function(err, data) {
-            allData = data;    
-            if(err){
-                reject(err)
-            }else{
-                resolve(data);
-            }
-        });
-    });
-}
 
 async function toCSV(data){
     new Promise(function(resolve, reject){
