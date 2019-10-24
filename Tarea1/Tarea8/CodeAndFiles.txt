@@ -1,0 +1,2 @@
+You can find all the codes and files used in the next repo: 
+https://github.com/LDanielMedinaC/SistemasInteligentes/tree/master/Tarea1

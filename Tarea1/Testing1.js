@@ -7,7 +7,7 @@ var indico = require("indico.io");
 var counter = 0; 
 
 
-indico.apiKey =  'a03c448f0845f57e1142dc6048c008db';
+indico.apiKey =  '';
 
 function split(data){
     let lines = data.split("\n");
@@ -91,7 +91,7 @@ async function inidicoGetEmotion(comments){
             url: 'https://api.meaningcloud.com/sentiment-2.1',
             headers: {'content-type': 'application/x-www-form-urlencoded'},
             form: {
-                key : "9d0dc1916b8af26cf23540fda972ef45",
+                key : "",
                 lang : "en",
                 txt : linesTesting[i][1],
                 txtf : "plain"
