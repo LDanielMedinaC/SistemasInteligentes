@@ -4,10 +4,10 @@ var sentiment = ["score_tag", "agreement", "subjectivity", "confidence", "irony"
 var request = require("request");
 var fs = require('fs');
 var indico = require("indico.io");
-var counter = 1500; 
+var counter = 0; 
 
 
-indico.apiKey =  'a03c448f0845f57e1142dc6048c008db';
+indico.apiKey =  '6c092f03627b28d6c95dc2adddcf0fe9';
 
 function split(data){
     let lines = data.split("\n");
@@ -58,7 +58,7 @@ async function read(path){
 
 async function toCSV(data){
     new Promise(function(resolve, reject){
-        fs.writeFile("Training.csv", data, (err) => {
+        fs.writeFile("Testing.csv", data, (err) => {
             if(err)
                 throw(err);
         });
@@ -76,10 +76,11 @@ async function mCloud(options){
 }
 
 (async () => {
-    let linesTraining = split(await read("data/Training1.csv"));
+    let linesTraining = split(await read("data/Testing.csv"));
     let rows = "";
     for (var i = 0; i < linesTraining.length; i++)
     {    
+        console.log(linesTraining[i][1])
         console.log(i);
         let options = {
             method: 'POST',
@@ -88,12 +89,12 @@ async function mCloud(options){
             form: {
                 key : "9d0dc1916b8af26cf23540fda972ef45",
                 lang : "en",
-                txt : linesTraining[i][0],
+                txt : linesTraining[i][1],
                 txtf : "plain"
             }
         };
         let ans = await mCloud(options);
-        let reviews = await indico.emotion(linesTraining[i][0]);
+        let reviews = await indico.emotion(linesTraining[i][1]);
         let sentiments = new Object;
         for(const key of sentiment){
             sentiments[key] = ans[key];
